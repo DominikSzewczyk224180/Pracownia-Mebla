@@ -96,14 +96,39 @@ body {
   justify-content: space-between;
 }
 
+.nav-logo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 48px;
+}
+
 .nav-logo img {
   height: 48px;
   transition: all 0.4s ease;
-  filter: brightness(0) invert(1);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }
+
+.nav-logo .logo-white {
+  opacity: 1;
+}
+
+.nav-logo .logo-color {
+  opacity: 0;
+}
+
 .nav.scrolled .nav-logo img {
   height: 36px;
-  filter: none;
+}
+
+.nav.scrolled .nav-logo .logo-white {
+  opacity: 0;
+}
+
+.nav.scrolled .nav-logo .logo-color {
+  opacity: 1;
 }
 
 .nav-links {
@@ -976,7 +1001,6 @@ body {
 
 .footer-logo img {
   height: 28px;
-  filter: brightness(10);
   opacity: 0.7;
   margin-bottom: 1rem;
 }
