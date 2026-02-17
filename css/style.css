@@ -97,10 +97,14 @@ body {
 }
 
 .nav-logo img {
-  height: 36px;
-  transition: height 0.4s ease;
+  height: 48px;
+  transition: all 0.4s ease;
+  filter: brightness(0) invert(1);
 }
-.nav.scrolled .nav-logo img { height: 28px; }
+.nav.scrolled .nav-logo img {
+  height: 36px;
+  filter: none;
+}
 
 .nav-links {
   display: flex;
@@ -202,7 +206,7 @@ body {
   position: relative;
   min-height: 100vh;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   overflow: hidden;
 }
 
@@ -216,20 +220,28 @@ body {
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    180deg,
-    rgba(0,0,0,0.2) 0%,
-    rgba(0,0,0,0.15) 40%,
-    rgba(0,0,0,0.55) 100%
+    90deg,
+    rgba(0,0,0,0.25) 0%,
+    rgba(0,0,0,0.5) 35%,
+    rgba(0,0,0,0.72) 60%,
+    rgba(0,0,0,0.78) 100%
   );
 }
 
 .hero-content {
   position: relative;
   z-index: 2;
-  padding: 0 clamp(1.5rem, 4vw, 4rem) clamp(4rem, 8vw, 7rem);
+  padding: 0 clamp(1.5rem, 4vw, 4rem);
   max-width: 1280px;
   margin: 0 auto;
   width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.hero-text {
+  max-width: 600px;
+  padding: clamp(2rem, 4vw, 4rem) 0;
 }
 
 .hero-tag {
@@ -261,7 +273,7 @@ body {
 
 .hero h1 em {
   font-style: italic;
-  color: var(--brand-light);
+  color: #3dd4bf;
 }
 
 .hero-sub {
@@ -905,6 +917,56 @@ body {
   fill: white;
 }
 
+/* ========== AKTUALNOŚCI / FACEBOOK ========== */
+.news {
+  padding: clamp(5rem, 10vw, 9rem) 0;
+  background: var(--warm);
+}
+
+.news-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.news-header p {
+  font-size: 1rem;
+  color: var(--text-light);
+  max-width: 480px;
+  margin: 0.8rem auto 0;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.news-embed {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.news-fb-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--brand);
+  text-decoration: none;
+  margin-top: 2rem;
+  transition: all 0.3s ease;
+}
+
+.news-fb-link:hover {
+  color: var(--brand-dark);
+  gap: 0.9rem;
+}
+
+.news-fb-link svg {
+  width: 20px; height: 20px;
+  fill: currentColor;
+}
+
 /* ========== FOOTER ========== */
 .footer {
   padding: 3rem 0;
@@ -968,6 +1030,28 @@ body {
 @media (max-width: 768px) {
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
+
+  .hero {
+    align-items: flex-end;
+  }
+
+  .hero-overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(0,0,0,0.2) 0%,
+      rgba(0,0,0,0.35) 40%,
+      rgba(0,0,0,0.75) 100%
+    );
+  }
+
+  .hero-content {
+    justify-content: flex-start;
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+  }
+
+  .hero-text {
+    max-width: 100%;
+  }
 
   .products-grid {
     grid-template-columns: 1fr;
