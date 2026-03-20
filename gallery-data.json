@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Kuchnie nowoczesne",
+    "desc": "Minimalizm, naturalne drewno, czyste linie",
+    "folder": "Kuchnie nowoczesne",
+    "photos": ["1.png", "2.png", "3.png"]
+  },
+  {
+    "name": "Kuchnie klasyczne",
+    "desc": "Ponadczasowa elegancja i ciepło domowego ogniska",
+    "folder": "Kuchnie klasyczne",
+    "photos": ["1.png", "2.png"]
+  },
+  {
+    "name": "Meble nietypowe",
+    "desc": "Komody, półki, regały i unikalne projekty",
+    "folder": "Meble nietypowe",
+    "photos": ["1.png", "2.png"]
+  },
+  {
+    "name": "Szafy",
+    "desc": "Na wymiar, pod skos, do każdego wnętrza",
+    "folder": "Szafy",
+    "photos": ["1.png"]
+  },
+  {
+    "name": "Meble do łazienki",
+    "desc": "Szafki, zabudowy i rozwiązania łazienkowe",
+    "folder": "Meble do lazienki",
+    "photos": ["1.png"]
+  },
+  {
+    "name": "Szafki do salonu",
+    "desc": "Meble RTV, zabudowy ścienne, regały",
+    "folder": "Szafki do salonu",
+    "photos": ["1.png"]
+  },
+  {
+    "name": "Kompleksowe realizacje",
+    "desc": "Projektujemy i wyposażamy całe wnętrza od A do Z",
+    "folder": "Kompleksowe realizacje",
+    "photos": ["1.png", "2.png", "3.png", "4.png"]
+  }
+]
