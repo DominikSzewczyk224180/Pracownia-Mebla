@@ -58,18 +58,20 @@ function buildCategoryCards(categories) {
   if (!grid) return;
 
   categories.forEach(cat => {
-    const paths = cat.photos.map(p => IMG_BASE + cat.folder + '/' + p);
-    const count = paths.length;
+    const allPaths = cat.photos.map(p => IMG_BASE + cat.folder + '/' + p);
+    // Slider shows max 5 images for performance
+    const sliderPaths = allPaths.slice(0, 5);
+    const count = allPaths.length;
     const countLabel = count === 1 ? '1 zdjęcie' : count < 5 ? count + ' zdjęcia' : count + ' zdjęć';
 
     const card = document.createElement('div');
     card.className = 'cat-card reveal';
     card.dataset.category = cat.name;
-    card.dataset.images = paths.join(',');
+    card.dataset.images = allPaths.join(',');
 
     card.innerHTML =
       '<div class="cat-slider">' +
-        paths.map(src => '<img src="' + src + '" alt="' + cat.name + '" loading="lazy">').join('') +
+        sliderPaths.map(src => '<img src="' + src + '" alt="' + cat.name + '" loading="lazy">').join('') +
       '</div>' +
       '<span class="cat-count">' + countLabel + '</span>' +
       '<div class="cat-overlay">' +
@@ -83,38 +85,65 @@ function buildCategoryCards(categories) {
   });
 }
 
+// ========== REALIZACJE — show 8 random, load more on click ==========
+let allGalleryImages = [];
+let galleryShown = 0;
+const GALLERY_BATCH = 8;
+
 function buildGalleryMasonry(categories) {
   const masonry = document.getElementById('galleryMasonry');
   if (!masonry) return;
 
-  // Collect all images from all categories, shuffled
-  const allImages = [];
+  // Collect all images with category labels
   categories.forEach(cat => {
     cat.photos.forEach(p => {
-      allImages.push(IMG_BASE + cat.folder + '/' + p);
+      allGalleryImages.push({
+        src: IMG_BASE + cat.folder + '/' + p,
+        cat: cat.name
+      });
     });
   });
 
-  // Simple shuffle
-  for (let i = allImages.length - 1; i > 0; i--) {
+  // Shuffle
+  for (let i = allGalleryImages.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [allImages[i], allImages[j]] = [allImages[j], allImages[i]];
+    [allGalleryImages[i], allGalleryImages[j]] = [allGalleryImages[j], allGalleryImages[i]];
   }
 
-  allImages.forEach(src => {
+  // Show first batch
+  showMoreGallery();
+}
+
+function showMoreGallery() {
+  const masonry = document.getElementById('galleryMasonry');
+  const end = Math.min(galleryShown + GALLERY_BATCH, allGalleryImages.length);
+
+  for (let i = galleryShown; i < end; i++) {
+    const img = allGalleryImages[i];
     const item = document.createElement('div');
     item.className = 'gallery-item reveal';
-    item.innerHTML = '<img src="' + src + '" alt="Realizacja" loading="lazy">';
-    masonry.appendChild(item);
-  });
-
-  // Lightbox for gallery items
-  masonry.querySelectorAll('.gallery-item').forEach(item => {
+    item.innerHTML = '<img src="' + img.src + '" alt="' + img.cat + '" loading="lazy">';
     item.addEventListener('click', () => {
-      document.getElementById('lightboxImg').src = item.querySelector('img').src;
+      document.getElementById('lightboxImg').src = img.src;
       document.getElementById('lightbox').classList.add('open');
     });
-  });
+    masonry.appendChild(item);
+  }
+
+  galleryShown = end;
+
+  // Update or hide "load more" button
+  const btn = document.getElementById('galleryLoadMore');
+  if (btn) {
+    if (galleryShown >= allGalleryImages.length) {
+      btn.style.display = 'none';
+    } else {
+      btn.textContent = 'Pokaż więcej (' + (allGalleryImages.length - galleryShown) + ' pozostało)';
+    }
+  }
+
+  // Re-init reveal for new items
+  initReveal();
 }
 
 // ========== CATEGORY CARD SLIDERS ==========
