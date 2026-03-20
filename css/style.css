@@ -416,8 +416,29 @@ body {
 
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: auto;
   gap: 1.5rem;
+}
+
+/* First two cards (kuchnie) span full width each = big */
+.cat-card.cat-big {
+  grid-column: span 1;
+  aspect-ratio: 3/2;
+}
+
+/* Remaining cards: 3 per row, smaller */
+.cat-card.cat-small {
+  aspect-ratio: 4/3;
+}
+
+/* When we have 5 small cards: use a separate sub-grid row approach via JS classes */
+/* Row of 3 */
+.products-grid-small {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  grid-column: 1 / -1;
 }
 
 /* Category card with image slider */
@@ -430,18 +451,24 @@ body {
   background: var(--charcoal);
 }
 
+/* FADE animation instead of slide */
 .cat-slider {
   position: absolute;
   inset: 0;
-  display: flex;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .cat-slider img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+.cat-slider img.active {
+  opacity: 1;
 }
 
 .cat-overlay {
@@ -466,6 +493,10 @@ body {
   font-weight: 400;
   color: var(--white);
   margin-bottom: 0.2rem;
+}
+
+.cat-big .cat-overlay h3 {
+  font-size: 1.8rem;
 }
 
 .cat-overlay p {
@@ -1207,6 +1238,14 @@ body {
 
   .products-grid {
     grid-template-columns: 1fr;
+  }
+
+  .cat-card.cat-big {
+    aspect-ratio: 4/3;
+  }
+
+  .products-grid-small {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .about-grid {

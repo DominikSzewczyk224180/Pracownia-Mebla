@@ -57,32 +57,49 @@ function buildCategoryCards(categories) {
   const grid = document.getElementById('productsGrid');
   if (!grid) return;
 
-  categories.forEach(cat => {
-    const allPaths = cat.photos.map(p => IMG_BASE + cat.folder + '/' + p);
-    // Slider shows max 5 images for performance
-    const sliderPaths = allPaths.slice(0, 5);
-    const count = allPaths.length;
-    const countLabel = count === 1 ? '1 zdjęcie' : count < 5 ? count + ' zdjęcia' : count + ' zdjęć';
+  // First 2 = big cards directly in grid, rest = small in sub-grid rows of 3
+  const bigCats = categories.slice(0, 2);
+  const smallCats = categories.slice(2);
 
-    const card = document.createElement('div');
-    card.className = 'cat-card reveal';
-    card.dataset.category = cat.name;
-    card.dataset.images = allPaths.join(',');
-
-    card.innerHTML =
-      '<div class="cat-slider">' +
-        sliderPaths.map(src => '<img src="' + src + '" alt="' + cat.name + '" loading="lazy">').join('') +
-      '</div>' +
-      '<span class="cat-count">' + countLabel + '</span>' +
-      '<div class="cat-overlay">' +
-        '<h3>' + cat.name + '</h3>' +
-        '<p>' + cat.desc + '</p>' +
-        '<div class="cat-dots"></div>' +
-        '<span class="cat-browse">Zobacz galerię <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>' +
-      '</div>';
-
-    grid.appendChild(card);
+  bigCats.forEach(cat => {
+    grid.appendChild(createCatCard(cat, 'cat-big'));
   });
+
+  // Small cards in a sub-grid container (rows of 3)
+  if (smallCats.length > 0) {
+    const subGrid = document.createElement('div');
+    subGrid.className = 'products-grid-small';
+    smallCats.forEach(cat => {
+      subGrid.appendChild(createCatCard(cat, 'cat-small'));
+    });
+    grid.appendChild(subGrid);
+  }
+}
+
+function createCatCard(cat, sizeClass) {
+  const allPaths = cat.photos.map(p => IMG_BASE + cat.folder + '/' + p);
+  const sliderPaths = allPaths.slice(0, 5);
+  const count = allPaths.length;
+  const countLabel = count === 1 ? '1 zdjęcie' : count < 5 ? count + ' zdjęcia' : count + ' zdjęć';
+
+  const card = document.createElement('div');
+  card.className = 'cat-card ' + sizeClass + ' reveal';
+  card.dataset.category = cat.name;
+  card.dataset.images = allPaths.join(',');
+
+  card.innerHTML =
+    '<div class="cat-slider">' +
+      sliderPaths.map((src, i) => '<img src="' + src + '" alt="' + cat.name + '" loading="lazy"' + (i === 0 ? ' class="active"' : '') + '>').join('') +
+    '</div>' +
+    '<span class="cat-count">' + countLabel + '</span>' +
+    '<div class="cat-overlay">' +
+      '<h3>' + cat.name + '</h3>' +
+      '<p>' + cat.desc + '</p>' +
+      '<div class="cat-dots"></div>' +
+      '<span class="cat-browse">Zobacz galerię <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>' +
+    '</div>';
+
+  return card;
 }
 
 // ========== REALIZACJE — show 8 random, load more on click ==========
@@ -165,15 +182,16 @@ function initSliders() {
     const dots = dotsContainer.querySelectorAll('.cat-dot');
 
     function goTo(index) {
+      images[current].classList.remove('active');
       current = index;
-      slider.style.transform = 'translateX(-' + (current * 100) + '%)';
+      images[current].classList.add('active');
       dots.forEach((d, i) => d.classList.toggle('active', i === current));
     }
 
     function next() { goTo((current + 1) % count); }
 
     function startAuto() {
-      if (count > 1) interval = setInterval(next, 3500);
+      if (count > 1) interval = setInterval(next, 4000);
     }
     function stopAuto() { clearInterval(interval); }
 
