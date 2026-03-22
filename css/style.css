@@ -1214,6 +1214,11 @@ body {
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
 
+  .nav-logo { height: 38px; }
+  .nav-logo img { height: 38px; }
+  .nav.scrolled .nav-logo img { height: 30px; }
+
+  /* Hero - stronger overlay for readability */
   .hero {
     align-items: flex-end;
   }
@@ -1221,9 +1226,9 @@ body {
   .hero-overlay {
     background: linear-gradient(
       180deg,
-      rgba(0,0,0,0.2) 0%,
-      rgba(0,0,0,0.35) 40%,
-      rgba(0,0,0,0.75) 100%
+      rgba(0,0,0,0.35) 0%,
+      rgba(0,0,0,0.5) 30%,
+      rgba(0,0,0,0.8) 100%
     );
   }
 
@@ -1236,6 +1241,21 @@ body {
     max-width: 100%;
   }
 
+  .hero h1 {
+    font-size: clamp(2rem, 8vw, 3rem);
+    text-shadow: 0 2px 20px rgba(0,0,0,0.4);
+  }
+
+  .hero-sub {
+    font-size: 0.92rem;
+    color: rgba(255,255,255,0.85);
+  }
+
+  .hero-tag {
+    font-size: 0.6rem;
+  }
+
+  /* Products - all cards single column on mobile */
   .products-grid {
     grid-template-columns: 1fr;
   }
@@ -1245,7 +1265,33 @@ body {
   }
 
   .products-grid-small {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
+  }
+
+  /* Smaller text in card overlays on mobile */
+  .cat-overlay {
+    padding: 1.2rem;
+  }
+
+  .cat-overlay h3 {
+    font-size: 1.3rem;
+  }
+
+  .cat-big .cat-overlay h3 {
+    font-size: 1.4rem;
+  }
+
+  .cat-overlay p {
+    font-size: 0.75rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .cat-count {
+    font-size: 0.6rem;
+    padding: 0.25rem 0.55rem;
+    top: 0.7rem; right: 0.7rem;
   }
 
   .about-grid {
@@ -1276,6 +1322,24 @@ body {
   .reviews-grid {
     grid-template-columns: 1fr;
   }
+
+  /* Gallery modal on mobile */
+  .cat-gallery-body {
+    gap: 0.5rem;
+  }
+
+  .cat-gallery-nav {
+    width: 36px; height: 36px;
+    font-size: 1rem;
+  }
+
+  .cat-gallery-thumbs {
+    gap: 0.3rem;
+  }
+
+  .cat-gallery-thumb {
+    width: 44px; height: 33px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -1287,5 +1351,20 @@ body {
     flex-direction: column;
   }
 
+  .hero-actions .btn-primary,
+  .hero-actions .btn-outline {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
   .hero-scroll { display: none; }
+
+  .cat-card {
+    aspect-ratio: 3/2;
+  }
+
+  .cat-card.cat-big {
+    aspect-ratio: 3/2;
+  }
 }
