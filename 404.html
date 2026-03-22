@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Przekierowanie — Pracownia Mebla</title>
+  <script>
+    // Map old URLs to new #sections
+    var redirects = {
+      'kontakt': '#kontakt',
+      'contact': '#kontakt',
+      'o-pracowni': '#o-nas',
+      'o-nas': '#o-nas',
+      'about': '#o-nas',
+      'szafy': '#oferta',
+      'kuchnie-nowoczesne': '#oferta',
+      'kuchnie-klasyczne': '#oferta',
+      'kuchnie': '#oferta',
+      'produkty': '#oferta',
+      'products': '#oferta',
+      'meble-nietypowe': '#oferta',
+      'meble': '#oferta',
+      'projekty-3d': '#oferta',
+      'studio-projektowe': '#oferta',
+      'komody-polki-i-regaly': '#oferta',
+      'realizacje': '#realizacje',
+      'galeria': '#realizacje',
+      'gallery': '#realizacje',
+      'opinie': '#opinie',
+      'aktualnosci': '#aktualnosci',
+      'news': '#aktualnosci'
+    };
+
+    // Get the path without leading slash and trailing slash
+    var path = window.location.pathname.replace(/^\//, '').replace(/\/$/, '').toLowerCase();
+
+    // Also remove .html extension if present
+    path = path.replace(/\.html$/, '');
+
+    // Check if we have a redirect
+    var target = redirects[path];
+
+    if (target) {
+      window.location.replace('/' + target);
+    } else {
+      // Default: go to homepage
+      window.location.replace('/');
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Outfit', system-ui, sans-serif;
+      background: #faf9f6;
+      color: #2d2d2d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 2rem;
+    }
+    .box {
+      max-width: 400px;
+    }
+    h1 {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #1b7367;
+      margin-bottom: 0.5rem;
+    }
+    p {
+      font-size: 0.95rem;
+      color: #6b6b6b;
+      line-height: 1.6;
+    }
+    a {
+      color: #1b7367;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <noscript>
+    <div class="box">
+      <h1>Strona została przeniesiona</h1>
+      <p>Szukana podstrona nie istnieje. Zapraszamy na <a href="/">stronę główną Pracowni Mebla</a>.</p>
+    </div>
+  </noscript>
+</body>
+</html>
