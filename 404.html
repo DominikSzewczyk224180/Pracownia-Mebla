@@ -5,48 +5,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Przekierowanie — Pracownia Mebla</title>
   <script>
-    // Old WordPress URL patterns → new #section
-    var map = {
-      'kontakt': '#kontakt',
-      'o-pracowni': '#o-nas',
-      'kuchnie-nowoczesne': '#oferta',
-      'kuchnie-klasyczne': '#oferta',
-      'kuchnie': '#oferta',
-      'szafy': '#oferta',
-      'stoly-i-biurka': '#oferta',
-      'meble-nietypowe': '#oferta',
-      'fotele-i-sofy': '#oferta',
-      'komody-polki-i-regaly': '#oferta',
-      'produkty': '#oferta',
-      'portfolio': '#oferta',
-      'projekty-3d': '#oferta',
-      'studio-projektowe': '#oferta',
-      'realizacje': '#realizacje',
-      'galeria': '#realizacje',
-      'opinie': '#opinie',
-      'aktualnosci': '#aktualnosci'
-    };
-
-    // Get full path, strip slashes and .html
     var path = window.location.pathname.toLowerCase()
-      .replace(/^\//, '').replace(/\/$/, '')
-      .replace(/\.html$/, '')
-      .replace(/index\.php\/?/, '');  // strip index.php/
+      .replace(/^\//, '').replace(/\/$/, '');
 
-    // Try to find a match in any part of the path
-    var target = null;
-    var segments = path.split('/').filter(Boolean);
+    // Do NOT redirect static file requests (favicon, images, css, js, etc.)
+    if (/\.(ico|png|jpg|jpeg|gif|svg|webp|css|js|json|xml|txt|webmanifest|woff|woff2|ttf|eot|map)$/i.test(path)) {
+      // Real 404 for a missing file — just stop, don't redirect
+    } else {
+      // Old WordPress URL patterns → new #section
+      var map = {
+        'kontakt': '#kontakt',
+        'o-pracowni': '#o-nas',
+        'kuchnie-nowoczesne': '#oferta',
+        'kuchnie-klasyczne': '#oferta',
+        'kuchnie': '#oferta',
+        'szafy': '#oferta',
+        'stoly-i-biurka': '#oferta',
+        'meble-nietypowe': '#oferta',
+        'fotele-i-sofy': '#oferta',
+        'komody-polki-i-regaly': '#oferta',
+        'produkty': '#oferta',
+        'portfolio': '#oferta',
+        'projekty-3d': '#oferta',
+        'studio-projektowe': '#oferta',
+        'realizacje': '#realizacje',
+        'galeria': '#realizacje',
+        'opinie': '#opinie',
+        'aktualnosci': '#aktualnosci'
+      };
 
-    // Check each segment from last to first (most specific first)
-    for (var i = segments.length - 1; i >= 0; i--) {
-      if (map[segments[i]]) {
-        target = map[segments[i]];
-        break;
+      // Strip index.php and .html
+      var cleanPath = path
+        .replace(/\.html$/, '')
+        .replace(/index\.php\/?/, '');
+
+      var target = null;
+      var segments = cleanPath.split('/').filter(Boolean);
+
+      for (var i = segments.length - 1; i >= 0; i--) {
+        if (map[segments[i]]) {
+          target = map[segments[i]];
+          break;
+        }
+      }
+
+      if (target) {
+        window.location.replace('/' + target);
+      } else {
+        window.location.replace('/');
       }
     }
-
-    // Redirect
-    window.location.replace('/' + (target || ''));
   </script>
   <style>
     body {
