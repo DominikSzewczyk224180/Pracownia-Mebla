@@ -5,47 +5,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Przekierowanie — Pracownia Mebla</title>
   <script>
-    // Map old URLs to new #sections
-    var redirects = {
+    // Old WordPress URL patterns → new #section
+    var map = {
       'kontakt': '#kontakt',
-      'contact': '#kontakt',
       'o-pracowni': '#o-nas',
-      'o-nas': '#o-nas',
-      'about': '#o-nas',
-      'szafy': '#oferta',
       'kuchnie-nowoczesne': '#oferta',
       'kuchnie-klasyczne': '#oferta',
       'kuchnie': '#oferta',
-      'produkty': '#oferta',
-      'products': '#oferta',
+      'szafy': '#oferta',
+      'stoly-i-biurka': '#oferta',
       'meble-nietypowe': '#oferta',
-      'meble': '#oferta',
+      'fotele-i-sofy': '#oferta',
+      'komody-polki-i-regaly': '#oferta',
+      'produkty': '#oferta',
+      'portfolio': '#oferta',
       'projekty-3d': '#oferta',
       'studio-projektowe': '#oferta',
-      'komody-polki-i-regaly': '#oferta',
       'realizacje': '#realizacje',
       'galeria': '#realizacje',
-      'gallery': '#realizacje',
       'opinie': '#opinie',
-      'aktualnosci': '#aktualnosci',
-      'news': '#aktualnosci'
+      'aktualnosci': '#aktualnosci'
     };
 
-    // Get the path without leading slash and trailing slash
-    var path = window.location.pathname.replace(/^\//, '').replace(/\/$/, '').toLowerCase();
+    // Get full path, strip slashes and .html
+    var path = window.location.pathname.toLowerCase()
+      .replace(/^\//, '').replace(/\/$/, '')
+      .replace(/\.html$/, '')
+      .replace(/index\.php\/?/, '');  // strip index.php/
 
-    // Also remove .html extension if present
-    path = path.replace(/\.html$/, '');
+    // Try to find a match in any part of the path
+    var target = null;
+    var segments = path.split('/').filter(Boolean);
 
-    // Check if we have a redirect
-    var target = redirects[path];
-
-    if (target) {
-      window.location.replace('/' + target);
-    } else {
-      // Default: go to homepage
-      window.location.replace('/');
+    // Check each segment from last to first (most specific first)
+    for (var i = segments.length - 1; i >= 0; i--) {
+      if (map[segments[i]]) {
+        target = map[segments[i]];
+        break;
+      }
     }
+
+    // Redirect
+    window.location.replace('/' + (target || ''));
   </script>
   <style>
     body {
@@ -59,31 +60,15 @@
       text-align: center;
       padding: 2rem;
     }
-    .box {
-      max-width: 400px;
-    }
-    h1 {
-      font-size: 1.2rem;
-      font-weight: 500;
-      color: #1b7367;
-      margin-bottom: 0.5rem;
-    }
-    p {
-      font-size: 0.95rem;
-      color: #6b6b6b;
-      line-height: 1.6;
-    }
-    a {
-      color: #1b7367;
-      text-decoration: none;
-      font-weight: 500;
-    }
+    h1 { font-size: 1.2rem; font-weight: 500; color: #1b7367; margin-bottom: 0.5rem; }
+    p { font-size: 0.95rem; color: #6b6b6b; line-height: 1.6; }
+    a { color: #1b7367; text-decoration: none; font-weight: 500; }
     a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
   <noscript>
-    <div class="box">
+    <div>
       <h1>Strona została przeniesiona</h1>
       <p>Szukana podstrona nie istnieje. Zapraszamy na <a href="/">stronę główną Pracowni Mebla</a>.</p>
     </div>

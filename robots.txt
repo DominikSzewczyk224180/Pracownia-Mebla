@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /$
+Allow: /gallery-data.json
+Allow: /images/
+Allow: /css/
+Allow: /js/
+
+# Block all old WordPress paths
+Disallow: /index.php
+Disallow: /index.php/
+Disallow: /wp-
+Disallow: /portfolio/
+Disallow: /kontakt/
+Disallow: /o-pracowni/
+Disallow: /produkty/
+
+Sitemap: https://pracownia-mebla.pl/sitemap.xml
