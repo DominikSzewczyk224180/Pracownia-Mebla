@@ -87,9 +87,15 @@ function createCatCard(cat, sizeClass) {
   card.dataset.category = cat.name;
   card.dataset.images = allPaths.join(',');
 
+  // Only first image loads immediately, rest use data-src (lazy)
   card.innerHTML =
     '<div class="cat-slider">' +
-      sliderPaths.map((src, i) => '<img src="' + src + '" alt="' + cat.name + '" loading="lazy"' + (i === 0 ? ' class="active"' : '') + '>').join('') +
+      sliderPaths.map((src, i) => {
+        if (i === 0) {
+          return '<img src="' + src + '" alt="' + cat.name + '" class="active">';
+        }
+        return '<img data-src="' + src + '" alt="' + cat.name + '">';
+      }).join('') +
     '</div>' +
     '<span class="cat-count">' + countLabel + '</span>' +
     '<div class="cat-overlay">' +
@@ -181,7 +187,19 @@ function initSliders() {
     }
     const dots = dotsContainer.querySelectorAll('.cat-dot');
 
+    // Lazy-load: move data-src to src when needed
+    function ensureLoaded(index) {
+      var img = images[index];
+      if (img.dataset.src && !img.src) {
+        img.src = img.dataset.src;
+        delete img.dataset.src;
+      }
+    }
+
     function goTo(index) {
+      ensureLoaded(index);
+      // Also preload next one
+      ensureLoaded((index + 1) % count);
       images[current].classList.remove('active');
       current = index;
       images[current].classList.add('active');

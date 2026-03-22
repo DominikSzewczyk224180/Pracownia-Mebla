@@ -448,7 +448,14 @@ body {
   overflow: hidden;
   aspect-ratio: 4/3;
   cursor: pointer;
-  background: var(--charcoal);
+  background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 50%, #2a2a2a 100%);
+  background-size: 200% 200%;
+  animation: shimmer 2s ease infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
 }
 
 /* FADE animation instead of slide */
